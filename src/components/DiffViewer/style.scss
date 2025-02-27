@@ -1,0 +1,97 @@
+@import "~/stylesheets/variables";
+.c-diff-viewer {
+  $parent: &;
+
+  display: flex;
+  border: 1px solid $color-border;
+  border-radius: 4px;
+
+  &__before,
+  &__after {
+    flex: 1;
+    overflow: auto;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  &__before {
+    counter-reset: before;
+    #{$parent}__line-num::before {
+      counter-increment: before;
+      content: counter(before);
+    }
+    .changed {
+      &#{$parent}__line {
+        background-color: rgba($color-red-weak, 0.3);
+      }
+
+      #{$parent}__mark::before {
+        content: "-";
+      }
+
+      #{$parent}__line-num,
+      #{$parent}__line-text span {
+        background-color: rgba($color-red-weak, 0.5);
+      }
+    }
+  }
+
+  &__after {
+    counter-reset: after;
+    border-left: 1px solid $color-border;
+
+    #{$parent}__line-num::before {
+      counter-increment: after;
+      content: counter(after);
+    }
+
+    .changed {
+      &#{$parent}__line {
+        background-color: rgba($color-green-weak, 0.3);
+      }
+
+      #{$parent}__mark::before {
+        content: "+";
+      }
+
+      #{$parent}__line-num,
+      #{$parent}__line-text span {
+        background-color: rgba($color-green-weak, 0.5);
+      }
+    }
+  }
+
+  &__filename {
+    padding: 10px;
+    border-bottom: 1px solid $color-border;
+  }
+
+  &__line {
+    min-height: 25px;
+    display: flex;
+  }
+
+  &__line-num,
+  &__mark,
+  &__line-text {
+    line-height: 25px;
+    display: inline-block;
+  }
+
+  &__line-num {
+    width: 50px;
+    text-align: center;
+    flex-shrink: 0;
+    opacity: 0.6;
+  }
+
+  &__mark {
+    text-align: center;
+    width: 25px;
+    flex-shrink: 0;
+  }
+
+  &__line-text {
+    word-break: break-all;
+  }
+}
