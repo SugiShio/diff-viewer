@@ -1,4 +1,5 @@
 import "./style.scss";
+import { getDiff } from "./getDiff";
 type Line =
   | {
       type: "changed" | "unchanged";
@@ -8,19 +9,8 @@ type Line =
       type: "empty";
     };
 
-export const DiffViewer = () => {
-  const before: Line[] = [
-    { type: "unchanged", text: "111" },
-    { type: "changed", text: "111<span>bbb</span>" },
-    { type: "changed", text: "111bbb" },
-    { type: "unchanged", text: "Hello, world!" },
-  ];
-  const after: Line[] = [
-    { type: "unchanged", text: "111" },
-    { type: "changed", text: "111<span>aaa</span>" },
-    { type: "empty" },
-    { type: "unchanged", text: "Hello, world!" },
-  ];
+export const DiffViewer = ({ beforeText, afterText }: { beforeText: string; afterText: string }) => {
+  const { before, after } = getDiff(beforeText, afterText);
 
   const line = (lines: Line[]) => {
     return lines.map((line, index) => {
