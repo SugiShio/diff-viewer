@@ -1,29 +1,36 @@
 @import "~/stylesheets/variables";
 .c-diff-viewer {
   $parent: &;
+  counter-reset: before after;
 
-  display: flex;
   border: 1px solid $color-border;
   border-radius: 4px;
 
+  &__row {
+    display: flex;
+  }
+
   &__before,
   &__after {
-    flex: 1;
+    display: flex;
     overflow: auto;
     font-size: 14px;
     line-height: 1.5;
+    width: 100%;
+
+    &.empty {
+      background-color: rgba(#aaa, 0.1);
+    }
   }
 
   &__before {
-    counter-reset: before;
     #{$parent}__line-num::before {
       counter-increment: before;
       content: counter(before);
     }
-    .changed {
-      &#{$parent}__line {
-        background-color: rgba($color-red-weak, 0.3);
-      }
+
+    &.changed {
+      background-color: rgba($color-red-weak, 0.3);
 
       #{$parent}__mark::before {
         content: "-";
@@ -37,7 +44,6 @@
   }
 
   &__after {
-    counter-reset: after;
     border-left: 1px solid $color-border;
 
     #{$parent}__line-num::before {
@@ -45,10 +51,8 @@
       content: counter(after);
     }
 
-    .changed {
-      &#{$parent}__line {
-        background-color: rgba($color-green-weak, 0.3);
-      }
+    &.changed {
+      background-color: rgba($color-green-weak, 0.3);
 
       #{$parent}__mark::before {
         content: "+";
@@ -64,6 +68,11 @@
   &__filename {
     padding: 10px;
     border-bottom: 1px solid $color-border;
+    width: 100%;
+
+    & + & {
+      border-left: 1px solid $color-border;
+    }
   }
 
   &__line {
@@ -83,6 +92,7 @@
     text-align: center;
     flex-shrink: 0;
     opacity: 0.6;
+    background-color: rgba(#aaa, 0.1);
   }
 
   &__mark {
@@ -93,5 +103,6 @@
 
   &__line-text {
     word-break: break-all;
+    white-space: pre-wrap;
   }
 }

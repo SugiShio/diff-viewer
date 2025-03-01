@@ -1,5 +1,5 @@
 import "./style.scss";
-import { getDiff } from "./getDiff";
+import { getLineDiff } from "./getDiff";
 type Line =
   | {
       type: "changed" | "unchanged";
@@ -10,33 +10,50 @@ type Line =
     };
 
 export const DiffViewer = ({ beforeText, afterText }: { beforeText: string; afterText: string }) => {
-  const { before, after } = getDiff(beforeText, afterText);
+  const { before, after } = getLineDiff(beforeText, afterText);
 
-  const line = (lines: Line[]) => {
-    return lines.map((line, index) => {
+  const line = (beforeLines: Line[], afterLines: Line[]) => {
+    const length = Math.max(beforeLines.length, afterLines.length);
+    const result = new Array(length).fill(null);
+    return result.map((_, index) => {
       return (
-        <div key={index} className={`c-diff-viewer__line ${line.type}`}>
-          {line.type !== "empty" && (
-            <>
-              <span className="c-diff-viewer__line-num"></span>
-              <span className="c-diff-viewer__mark"></span>
-              <code className="c-diff-viewer__line-text" dangerouslySetInnerHTML={{ __html: line.text }}></code>
-            </>
-          )}
+        <div className="c-diff-viewer__row" key={index}>
+          <div className={`c-diff-viewer__before ${beforeLines[index]?.type}`}>
+            {beforeLines[index] && beforeLines[index]?.type !== "empty" && (
+              <>
+                <span className="c-diff-viewer__line-num"></span>
+                <span className="c-diff-viewer__mark"></span>
+                <code
+                  className="c-diff-viewer__line-text"
+                  dangerouslySetInnerHTML={{ __html: beforeLines[index]?.text }}
+                ></code>
+              </>
+            )}
+          </div>
+          <div className={`c-diff-viewer__after ${afterLines[index]?.type}`}>
+            {afterLines[index] && afterLines[index]?.type !== "empty" && (
+              <>
+                <span className="c-diff-viewer__line-num"></span>
+                <span className="c-diff-viewer__mark"></span>
+                <code
+                  className="c-diff-viewer__line-text"
+                  dangerouslySetInnerHTML={{ __html: afterLines[index]?.text }}
+                ></code>
+              </>
+            )}
+          </div>
         </div>
       );
     });
   };
+
   return (
     <div className="c-diff-viewer">
-      <div className="c-diff-viewer__before">
-        <div className="c-diff-viewer__filename">before.txt</div>
-        <div className="c-diff-viewer__content">{line(before)}</div>
+      <div className="c-diff-viewer__row">
+        <div className="c-diff-viewer__filename">before</div>
+        <div className="c-diff-viewer__filename">after</div>
       </div>
-      <div className="c-diff-viewer__after">
-        <div className="c-diff-viewer__filename">after.txt</div>
-        <div className="c-diff-viewer__content">{line(after)}</div>
-      </div>
+      {line(before, after)}
     </div>
   );
 };
