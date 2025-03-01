@@ -1,9 +1,10 @@
-@import "~/stylesheets/variables";
+@use "~/stylesheets/variables" as variables;
+
 button {
   padding: 5px 20px;
   border: 1px;
   border-radius: 4px;
-  background-color: $color-brown;
+  background-color: variables.$color-brown;
   color: #fff;
   cursor: pointer;
   box-shadow: 0 2px 3px rgba(#000, 0.1);

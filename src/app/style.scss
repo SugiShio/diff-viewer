@@ -1,4 +1,4 @@
-@import "~/stylesheets/variables";
+@use "~/stylesheets/variables" as variables;
 .p-index {
   padding: 20px;
 
@@ -15,7 +15,7 @@
 
   &__textarea {
     padding: 10px;
-    border: 1px solid $color-border;
+    border: 1px solid variables.$color-border;
     border-radius: 4px;
     width: 100%;
     min-height: calc(50vh - 40px);

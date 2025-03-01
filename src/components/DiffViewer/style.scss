@@ -1,9 +1,10 @@
-@import "~/stylesheets/variables";
+@use "~/stylesheets/variables" as variables;
+
 .c-diff-viewer {
   $parent: &;
   counter-reset: before after;
 
-  border: 1px solid $color-border;
+  border: 1px solid variables.$color-border;
   border-radius: 4px;
 
   &__row {
@@ -46,7 +47,7 @@
     }
 
     &.changed {
-      background-color: rgba($color-red-weak, 0.3);
+      background-color: rgba(variables.$color-red-weak, 0.3);
 
       #{$parent}__mark::before {
         content: "-";
@@ -54,13 +55,13 @@
 
       #{$parent}__line-num,
       #{$parent}__line-text span {
-        background-color: rgba($color-red-weak, 0.5);
+        background-color: rgba(variables.$color-red-weak, 0.5);
       }
     }
   }
 
   &__after {
-    border-left: 1px solid $color-border;
+    border-left: 1px solid variables.$color-border;
 
     #{$parent}__line-num::before {
       counter-increment: after;
@@ -68,7 +69,7 @@
     }
 
     &.changed {
-      background-color: rgba($color-green-weak, 0.3);
+      background-color: rgba(variables.$color-green-weak, 0.3);
 
       #{$parent}__mark::before {
         content: "+";
@@ -76,18 +77,18 @@
 
       #{$parent}__line-num,
       #{$parent}__line-text span {
-        background-color: rgba($color-green-weak, 0.5);
+        background-color: rgba(variables.$color-green-weak, 0.5);
       }
     }
   }
 
   &__filename {
     padding: 10px;
-    border-bottom: 1px solid $color-border;
+    border-bottom: 1px solid variables.$color-border;
     width: 100%;
 
     & + & {
-      border-left: 1px solid $color-border;
+      border-left: 1px solid variables.$color-border;
     }
   }
 
