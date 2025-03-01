@@ -1,8 +1,8 @@
-export const Index = () => {
+export const Account = () => {
   return (
     <div>
       <h1>Account Page</h1>
     </div>
   );
 };
-export default Index;
+export default Account;
