@@ -1,13 +1,6 @@
 import "./style.scss";
 import { getLineDiff } from "./getDiff";
-type Line =
-  | {
-      type: "changed" | "unchanged";
-      text: string;
-    }
-  | {
-      type: "empty";
-    };
+import { Line } from "./getDiff";
 
 export const DiffViewer = ({ beforeText, afterText }: { beforeText: string; afterText: string }) => {
   const { before, after } = getLineDiff(beforeText, afterText);

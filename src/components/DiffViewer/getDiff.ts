@@ -1,8 +1,13 @@
+export type Line = {
+  type: "changed" | "unchanged" | "empty";
+  text: string;
+};
+
 export const getLineDiff = (before: string, after: string) => {
   const beforeLines = before ? before.split("\n") : [];
   const afterLines = after ? after.split("\n") : [];
-  const resultBefore = [];
-  const resultAfter = [];
+  const resultBefore: Array<Line> = [];
+  const resultAfter: Array<Line> = [];
 
   let indexBefore = 0;
   while (beforeLines.length && indexBefore < beforeLines.length) {
@@ -11,11 +16,15 @@ export const getLineDiff = (before: string, after: string) => {
     if (indexAfter > -1) {
       const offset = Math.max(indexBefore, indexAfter);
       for (let i = 0; i < offset; i++) {
-        resultAfter.push(i < indexAfter ? { type: "changed", text: afterLines.shift() } : { type: "empty" });
-        resultBefore.push(i < indexBefore ? { type: "changed", text: beforeLines.shift() } : { type: "empty" });
+        resultAfter.push(
+          i < indexAfter ? { type: "changed", text: afterLines.shift() || "" } : { type: "empty", text: "" }
+        );
+        resultBefore.push(
+          i < indexBefore ? { type: "changed", text: beforeLines.shift() || "" } : { type: "empty", text: "" }
+        );
       }
-      resultAfter.push({ type: "unchanged", text: afterLines.shift() });
-      resultBefore.push({ type: "unchanged", text: beforeLines.shift() });
+      resultAfter.push({ type: "unchanged", text: afterLines.shift() || "" });
+      resultBefore.push({ type: "unchanged", text: beforeLines.shift() || "" });
       indexBefore = 0;
     } else {
       indexBefore++;
@@ -31,8 +40,8 @@ export const getLineDiff = (before: string, after: string) => {
   for (let index = 0; index < resultBefore.length; index++) {
     if (resultBefore[index].type === "changed" && resultAfter[index]?.type === "changed") {
       const { textBefore, textAfter } = getTextDiff(resultBefore[index].text || "", resultAfter[index].text || "");
-      resultBefore[index].text = textBefore;
-      resultAfter[index].text = textAfter;
+      resultBefore[index].text = textBefore || "";
+      resultAfter[index].text = textAfter || "";
     }
   }
   return {
