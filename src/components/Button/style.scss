@@ -1,0 +1,16 @@
+@import "~/stylesheets/variables";
+button {
+  padding: 5px 20px;
+  border: 1px;
+  border-radius: 4px;
+  background-color: $color-brown;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 2px 3px rgba(#000, 0.1);
+  transition: 0.1s;
+
+  &:hover {
+    box-shadow: 0 2px 5px rgba(#000, 0.3);
+    // transform: translateY(-3px);
+  }
+}
