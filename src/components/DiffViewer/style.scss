@@ -8,6 +8,22 @@
 
   &__row {
     display: flex;
+
+    &:first-child {
+      #{$parent}__line-num,
+      #{$parent}__mark,
+      #{$parent}__line-text {
+        padding-top: 3px;
+      }
+    }
+
+    &:last-child {
+      #{$parent}__line-num,
+      #{$parent}__mark,
+      #{$parent}__line-text {
+        padding-bottom: 3px;
+      }
+    }
   }
 
   &__before,

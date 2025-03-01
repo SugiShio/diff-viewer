@@ -49,10 +49,10 @@ export const DiffViewer = ({ beforeText, afterText }: { beforeText: string; afte
 
   return (
     <div className="c-diff-viewer">
-      <div className="c-diff-viewer__row">
+      {/* <div className="c-diff-viewer__row">
         <div className="c-diff-viewer__filename">before</div>
         <div className="c-diff-viewer__filename">after</div>
-      </div>
+      </div> */}
       {line(before, after)}
     </div>
   );

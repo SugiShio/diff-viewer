@@ -46,3 +46,7 @@ a {
 code {
   font-family: "Inconsolata", monospace;
 }
+
+button {
+  appearance: none;
+}
