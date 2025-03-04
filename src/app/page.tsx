@@ -10,6 +10,7 @@ const SAMPLE_AFTER =
 export default function Home() {
   const [beforeText, setBeforeText] = useState(SAMPLE_BEFORE);
   const [afterText, setAfterText] = useState(SAMPLE_AFTER);
+
   const handleBeforeText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setBeforeText(e.target.value);
   };
@@ -20,8 +21,8 @@ export default function Home() {
   return (
     <div className="p-index">
       <div className="p-index__textarea-wrapper">
-        <textarea className="p-index__textarea" name="" id="" onChange={handleBeforeText} value={SAMPLE_BEFORE} />
-        <textarea className="p-index__textarea" name="" id="" onChange={handleAfterText} value={SAMPLE_AFTER} />
+        <textarea className="p-index__textarea" onChange={handleBeforeText} defaultValue={SAMPLE_BEFORE} />
+        <textarea className="p-index__textarea" onChange={handleAfterText} defaultValue={SAMPLE_AFTER} />
       </div>
       <div className="p-index__button-wrapper">
         <Button text="差分を確認"></Button>
