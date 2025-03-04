@@ -1,3 +1,8 @@
-header {
+.c-header {
   padding: 20px;
+  text-align: center;
+
+  &__logo {
+    width: 100px;
+  }
 }
