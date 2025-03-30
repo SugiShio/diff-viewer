@@ -2,6 +2,15 @@
 .p-index {
   padding: 20px;
 
+  &__news {
+    text-align: center;
+  }
+
+  &__news-title {
+    font-size: 24px;
+    font-weight: normal;
+    margin: 20px 0;
+  }
   &__button-wrapper {
     margin: 20px 0;
     text-align: center;

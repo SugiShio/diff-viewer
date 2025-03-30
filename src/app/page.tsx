@@ -1,6 +1,8 @@
 "use client";
+import { collection, getDocs } from "firebase/firestore";
 import "./style.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { db } from "~/plugins/firebase";
 import { Button } from "~/components/Button";
 import { DiffViewer } from "~/components/DiffViewer";
 const SAMPLE_BEFORE =
@@ -10,6 +12,22 @@ const SAMPLE_AFTER =
 export default function Home() {
   const [beforeText, setBeforeText] = useState(SAMPLE_BEFORE);
   const [afterText, setAfterText] = useState(SAMPLE_AFTER);
+  const [news, setNews] = useState({} as { title: string; createdAt: string });
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const snapshot = await getDocs(collection(db, "articles"));
+        const articles = snapshot.docs.map((doc) => {
+          return doc.data();
+        });
+        const { title, createdAt } = articles[0];
+        setNews({ title, createdAt: createdAt.toDate().toLocaleString() });
+      } catch (error) {
+        console.error("Error fetching news: ", error);
+      }
+    };
+    fetchNews();
+  }, []);
 
   const handleBeforeText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setBeforeText(e.target.value);
@@ -20,6 +38,14 @@ export default function Home() {
 
   return (
     <div className="p-index">
+      {news && (
+        <section className="p-index__news">
+          <h2 className="p-index__news-title">News</h2>
+          <div className="p-index__news-item">
+            {news.createdAt} {news.title}
+          </div>
+        </section>
+      )}
       <div className="p-index__textarea-wrapper">
         <textarea className="p-index__textarea" onChange={handleBeforeText} defaultValue={SAMPLE_BEFORE} />
         <textarea className="p-index__textarea" onChange={handleAfterText} defaultValue={SAMPLE_AFTER} />
